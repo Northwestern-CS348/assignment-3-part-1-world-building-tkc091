@@ -3,17 +3,29 @@ For a game with 8 tiles of blocks on a 3x3 grid,
 write down the Facts and Rules to model the game state 
 shown as the follows:
 
- y\\x   pos1     pos2     pos3
-     ┌────────┬────────┬────────┐
-pos1 │ tile5  │ tile4  │ empty  │
-     ├────────┼────────┼────────┤
-pos2 │ tile6  │ tile1  │ tile8  │
-     ├────────┼────────┼────────┤
-pos3 │ tile7  │ tile3  │ tile2  │
-     └────────┴────────┴────────┘
-
+ y\\x      pos1    pos2    pos3
+     pos1  tile5   tile4   empty  
+     pos2  tile6   tile1   tile8  
+     pos3  tile7   tile3   tile2  
+   
 Example: 
 fact: (pred obj1 obj2)
 rule: ((pred obj1 obj2) (pred obj2 obj3)) -> (pred obj1 obj3)
 
 """
+fact: (loc tile5 pos1 pos1)
+fact: (loc tile4 pos2 pos1)
+fact: (loc empty pos3 pos1)
+fact: (loc tile6 pos1 pos2)
+fact: (loc tile1 pos2 pos2)
+fact: (loc tile8 pos3 pos2)
+fact: (loc tile7 pos1 pos3)
+fact: (loc tile3 pos2 pos3)
+fact: (loc tile2 pos3 pos3)
+fact: (movable tile4 pos2 pos1 pos3 pos1)
+fact: (movable tile8 pos3 pos2 pos3 pos1)
+rule: ((loc ?a ?x ?y) (loc ?b pos2 ?y)) -> (adjacent ?a ?b)
+rule: ((loc ?a ?x ?y) (loc ?b ?x pos2)) -> (adjacent ?a ?b)
+rule: ((loc ?a pos2 ?y) (loc ?b ?x ?y)) -> (adjacent ?a ?b)
+rule: ((loc ?a ?x pos2) (loc ?b ?x ?y)) -> (adjacent ?a ?b)
+rule: ((adjacent ?z empty) (loc ?a ?x ?y) (loc empty ?a ?b)) -> (movable ?z ?x ?y ?a ?b)
