@@ -1,4 +1,4 @@
-"""i
+"""
 For a game with 8 tiles of blocks on a 3x3 grid,
 write down the Facts and Rules to model the game state 
 shown as the follows:
